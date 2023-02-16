@@ -33,7 +33,7 @@ class Deathban : JavaPlugin() {
                     storage.save()
                 }
             }
-        }.runTaskTimer(this, 0, 20)
+        }.runTaskTimer(this, 0, 100)
     }
 
     override fun onDisable() {
