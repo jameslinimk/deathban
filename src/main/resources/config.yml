@@ -1,0 +1,8 @@
+livesLimit: 4
+updateInterval: 24
+
+playerDeathCost: 2
+nonPlayerDeathCost: 1
+
+lastUpdated: 0
+lives: {}

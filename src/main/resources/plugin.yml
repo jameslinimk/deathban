@@ -1,0 +1,9 @@
+name: Deathban
+version: '${project.version}'
+main: com.jamesalin.deathban.Deathban
+api-version: 1.19
+
+permissions:
+  bypass:
+    description: Bypasses the deathban restrictions
+    default: op
