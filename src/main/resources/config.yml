@@ -19,6 +19,5 @@ nonPlayerDeathCost: 1
 # Persistence Storage (IGNORE) #
 #------------------------------#
 
-lastUpdated: 0
-lives: {}
-bans: {}
+lives: { }
+punishments: { }
