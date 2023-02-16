@@ -17,6 +17,7 @@ class Deathban : JavaPlugin() {
     var lastUpdated: Long = 0
     var livesLimit = 0
 
+    var banLength = ""
     var playerDeathCost = 0
     var nonPlayerDeathCost = 0
 
@@ -41,6 +42,7 @@ class Deathban : JavaPlugin() {
         interval = config.getInt("updateInterval")
         lastUpdated = config.getLong("lastUpdated")
         livesLimit = config.getInt("livesLimit")
+        banLength = config.getString("banLength")!!
         playerDeathCost = config.getInt("playerDeathCost")
         nonPlayerDeathCost = config.getInt("nonPlayerDeathCost")
 

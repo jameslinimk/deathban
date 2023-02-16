@@ -1,8 +1,24 @@
+# Main Config
+
+# The limit of lives a player can have. Player lives reset/default to this
 livesLimit: 4
+
+# The amount of time until a player's lives are reset
 updateInterval: 24
 
+# The amount of time a player will be banned for once they run out of lives
+banLength: 24h
+
+# How many lives a player will lose when they die by a player
 playerDeathCost: 2
+
+# How many lives a player will lose when they die by a non-player
 nonPlayerDeathCost: 1
+
+#------------------------------#
+# Persistence Storage (IGNORE) #
+#------------------------------#
 
 lastUpdated: 0
 lives: {}
+bans: {}
