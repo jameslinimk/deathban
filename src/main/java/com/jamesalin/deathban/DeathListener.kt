@@ -1,4 +1,6 @@
 import com.jamesalin.deathban.Deathban
+import com.jamesalin.deathban.LivesInfo
+import com.jamesalin.deathban.currentTimeSeconds
 import com.jamesalin.deathban.getUUID
 import me.leoko.advancedban.utils.Punishment
 import me.leoko.advancedban.utils.PunishmentType
@@ -14,29 +16,39 @@ class DeathListener(private val plugin: Deathban) : Listener {
 
         val killer = event.entity.killer
         val player = event.player
-        val uuid = player.uniqueId.toString()
+        val uuid = player.name.getUUID()
 
         val cost =
             if (killer != null && killer.type == EntityType.PLAYER) plugin.conf.playerDeathCost else plugin.conf.nonPlayerDeathCost
 
-        val lives = plugin.config.getConfigurationSection("lives")!!
-        val l = (if (lives.contains(uuid)) lives.getInt(uuid) else plugin.conf.livesLimit) - cost
+        // Calculate new lives
+        if (plugin.storage.lives[uuid] == null) plugin.storage.lives[uuid] =
+            LivesInfo(plugin.conf.livesLimit, mutableListOf())
+        val newLives = plugin.storage.lives[uuid]!!.lives - cost
 
-        if (l <= 0) {
+        // Banning the player
+        if (newLives <= 0) {
             Punishment.create(
                 player.name,
-                player.name.getUUID(),
-                "reason",
+                uuid,
+                plugin.conf.banReason,
                 "admin",
                 PunishmentType.TEMP_BAN,
                 -1,
-                plugin.conf.banLength,
+                "${plugin.conf.banLength}h",
                 true
+            )
+
+            plugin.storage.punishments.add(
+                com.jamesalin.deathban.Punishment(
+                    uuid,
+                    cost,
+                    currentTimeSeconds() + plugin.conf.updateInterval * 3600
+                )
             )
         }
 
-        lives.set(uuid, l)
-        plugin.config.set("lives", lives)
-        plugin.conf.save()
+        plugin.storage.lives[uuid]!!.lives = newLives
+        plugin.storage.save()
     }
 }
