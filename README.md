@@ -1,6 +1,7 @@
 # Deathban
 
 Custom plugin for [Zerosmp](https://discord.gg/D8EyC4dUYv) that adds a deathban to the server
+for [papermc](https://papermc.io/) 1.19
 
 ## How it works
 
@@ -16,6 +17,11 @@ time.
 - `/lives` - Shows the player how many lives they have left
 - `/deaths` - Shows the player how many times they have died and information about their deaths
 - `/editlives <player> <amount>` - Edits the lives of a player (requires `deathban.editlives` permission)
+
+## Permissions
+
+- `deathban.editlives` - Allows a player to edit the lives of other players
+- `deathban.bypass` - Allows a player to bypass the deathban
 
 ## Defalt Config
 
