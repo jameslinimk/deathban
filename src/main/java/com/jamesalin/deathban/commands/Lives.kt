@@ -15,6 +15,7 @@ class Lives(private val plugin: Deathban) : CommandExecutor {
         val (uuid, name) = if (args?.size == 1) {
             val player = Bukkit.getPlayer(args[0]) ?: run {
                 val offlinePlayer = Bukkit.getOfflinePlayer(args[0])
+                Bukkit.getServer().offlinePlayers
                 if (offlinePlayer.hasPlayedBefore()) offlinePlayer else null
             }
 
