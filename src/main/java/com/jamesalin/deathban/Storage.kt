@@ -19,7 +19,8 @@ data class Punishment(val uuid: String, val livesLost: Int, val expires: Long)
 data class StorageSchema(
     var lastUpdated: Long = 0,
     var lives: MutableMap<String, LivesInfo> = mutableMapOf(),
-    var punishments: MutableList<Punishment> = mutableListOf()
+    var punishments: MutableList<Punishment> = mutableListOf(),
+    var visibility: MutableMap<String, Boolean> = mutableMapOf()
 )
 
 class Storage(plugin: Deathban) {
@@ -35,6 +36,9 @@ class Storage(plugin: Deathban) {
     var punishments: MutableList<Punishment>
         get() = data.punishments
         set(value) = run { data.punishments = value }
+    var visibility: MutableMap<String, Boolean>
+        get() = data.visibility
+        set(value) = run { data.visibility = value }
 
     fun onEnable() {
         if (!file.exists()) {

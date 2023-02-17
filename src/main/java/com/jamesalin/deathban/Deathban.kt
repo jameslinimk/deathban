@@ -4,22 +4,23 @@ import DeathListener
 import com.jamesalin.deathban.commands.*
 import me.leoko.advancedban.manager.UUIDManager
 import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer.legacyAmpersand
 import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.scheduler.BukkitRunnable
 import java.text.SimpleDateFormat
 import java.util.*
 
-fun String.toComponent() = LegacyComponentSerializer.legacyAmpersand().deserialize(this)
-fun Component.toStr() = LegacyComponentSerializer.legacyAmpersand().serialize(this)
+// Utility functions
+fun String.toComponent() = legacyAmpersand().deserialize(this)
+fun Component.toStr() = legacyAmpersand().serialize(this)
 
-fun String.getUUID(): String = UUIDManager.get().getUUID(this)
+fun String.getAdvancedUUID(): String = UUIDManager.get().getUUID(this)
 
 fun currentTimeSeconds() = System.currentTimeMillis() / 1000
 fun secondsToDate(timeSeconds: Long) = Date(timeSeconds * 1000)
 
-val formatter = SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
-fun Date.format() = formatter.format(this)
+val formatter = SimpleDateFormat("MMM dd, hh:mmaa")
+fun Date.format(): String = formatter.format(this)
 
 class Deathban : JavaPlugin() {
     val conf = Config(this)
@@ -28,21 +29,25 @@ class Deathban : JavaPlugin() {
     override fun onEnable() {
         logger.info(
             """
-            -----------------
-            Starting DeathBan
-            -----------------
+            ----------------------------------
+            Starting DeathBan by James Linimik
+            ----------------------------------
             """.trimIndent()
         )
 
         // Listeners
         server.pluginManager.registerEvents(DeathListener(this), this)
         getCommand("deaths")!!.setExecutor(DeathsCommand(this))
-
         getCommand("deaths")!!.tabCompleter = DeathsCompleter(this)
+
         getCommand("lives")!!.setExecutor(Lives(this))
+        getCommand("lives")!!.tabCompleter = LivesCompleter()
 
         getCommand("editlives")!!.setExecutor(Editlives(this))
         getCommand("editlives")!!.tabCompleter = EditlivesCompelter()
+
+        getCommand("showlives")!!.setExecutor(ShowLives(this))
+        getCommand("hidelives")!!.setExecutor(Hidelives(this))
 
         // onEnable
         conf.onEnable()

@@ -14,6 +14,9 @@ permissions:
   deathban.editlives:
     description: Allows the user to edit the amount of lives a player has
     default: op
+  deathban.seethrough:
+    description: Allows the user to see the lives of other players even if they are hidden
+    default: op
 
 commands:
   deaths:
@@ -21,11 +24,19 @@ commands:
     usage: /deaths [page]
     aliases: [ deathc, deathcount ]
   lives:
-    description: Shows the amount of lives you have
-    usage: /lives
+    description: Shows the amount of lives you or another player have
+    usage: /lives [player]
     aliases: [ lvs, livecount ]
   editlives:
     description: Edits the amount of lives a player has
     usage: /editlives <player> <amount>
     permission: deathban.editlives
     aliases: [ editlvs, editlivecount ]
+  showlives:
+    description: Makes your lives visible to other players
+    usage: /showlives
+    aliases: [ showlvs, showlivecount ]
+  hidelives:
+    description: Hides your lives from other players
+    usage: /hidelives
+    aliases: [ hidelvs, hidelivecount ]

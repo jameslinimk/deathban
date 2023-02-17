@@ -1,6 +1,9 @@
 package com.jamesalin.deathban.commands
 
-import com.jamesalin.deathban.*
+import com.jamesalin.deathban.Deathban
+import com.jamesalin.deathban.format
+import com.jamesalin.deathban.secondsToDate
+import com.jamesalin.deathban.toComponent
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -15,7 +18,7 @@ class DeathsCommand(private val plugin: Deathban) : CommandExecutor {
             return false
         }
 
-        val deaths = plugin.storage.lives[sender.name.getUUID()]?.deaths
+        val deaths = plugin.storage.lives["${sender.uniqueId}"]?.deaths
         if (deaths.isNullOrEmpty()) {
             sender.sendMessage("&cYou have no deaths. Congrats!".toComponent())
             return false
@@ -42,7 +45,6 @@ class DeathsCommand(private val plugin: Deathban) : CommandExecutor {
             )
         }
         sender.sendMessage("&2Page ${page + 1}/${chunks.size}")
-
         return false
     }
 }
@@ -58,7 +60,7 @@ class DeathsCompleter(private val plugin: Deathban) : TabCompleter {
 
         if (args?.size == 1) {
             if (sender !is Player) return completions
-            val deaths = plugin.storage.lives[sender.name.getUUID()]?.deaths
+            val deaths = plugin.storage.lives["${sender.uniqueId}"]?.deaths
             if (deaths.isNullOrEmpty()) return completions
 
             val numArray = mutableListOf<String>()
@@ -72,4 +74,3 @@ class DeathsCompleter(private val plugin: Deathban) : TabCompleter {
         return completions
     }
 }
-

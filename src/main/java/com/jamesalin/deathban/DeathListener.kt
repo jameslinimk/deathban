@@ -13,7 +13,7 @@ class DeathListener(private val plugin: Deathban) : Listener {
 
         val player = event.player
         val killer = player.killer
-        val uuid = player.name.getUUID()
+        val uuid = "${player.uniqueId}"
 
         val cost =
             if (killer != null && killer.type == EntityType.PLAYER) plugin.conf.playerDeathCost else plugin.conf.nonPlayerDeathCost
@@ -27,7 +27,7 @@ class DeathListener(private val plugin: Deathban) : Listener {
         if (newLives <= 0) {
             Punishment.create(
                 player.name,
-                uuid,
+                player.name.getAdvancedUUID(),
                 plugin.conf.banReason,
                 "admin",
                 PunishmentType.TEMP_BAN,
