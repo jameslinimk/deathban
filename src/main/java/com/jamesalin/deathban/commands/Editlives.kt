@@ -14,37 +14,37 @@ class Editlives(private val plugin: Deathban) : CommandExecutor {
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>?): Boolean {
         if (!sender.hasPermission("deathban.editlives")) {
             sender.sendMessage("&cYou don't have permission to use this command!".toComponent())
-            return false
+            return true
         }
 
         if (args?.size != 2) {
             sender.sendMessage("&cInvalid usage! Use /editlives <player> <number>".toComponent())
-            return false
+            return true
         }
 
         val player = getPlayer(args[0])
 
         if (player == null) {
             sender.sendMessage("&cPlayer ${args[0]} not found!".toComponent())
-            return false
+            return true
         }
 
         val lives = args[1].toIntOrNull()
         if (lives == null) {
             sender.sendMessage("&c${args[1]} is not a valid number!".toComponent())
-            return false
+            return true
         }
 
         if (!plugin.storage.lives.containsKey("${player.uniqueId}")) {
             sender.sendMessage("&cPlayer ${player.username} has no entry in lives!".toComponent())
-            return false
+            return true
         }
 
         plugin.storage.lives["${player.uniqueId}"]!!.lives = lives
         plugin.storage.save()
 
         sender.sendMessage("&aSuccessfully set ${player.username}'s lives to $lives!".toComponent())
-        return false
+        return true
     }
 }
 

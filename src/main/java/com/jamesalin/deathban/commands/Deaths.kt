@@ -15,13 +15,13 @@ class DeathsCommand(private val plugin: Deathban) : CommandExecutor {
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>?): Boolean {
         if (sender !is Player) {
             sender.sendMessage("&cThe console can't have any deaths!".toComponent())
-            return false
+            return true
         }
 
         val deaths = plugin.storage.lives["${sender.uniqueId}"]?.deaths
         if (deaths.isNullOrEmpty()) {
             sender.sendMessage("&cYou have no deaths. Congrats!".toComponent())
-            return false
+            return true
         }
 
         val chunks = deaths.chunked(5)
@@ -31,7 +31,7 @@ class DeathsCommand(private val plugin: Deathban) : CommandExecutor {
 
         if (page < 0 || page >= chunks.size) {
             sender.sendMessage("&c${argPage} is not a valid page! Select page 1-${chunks.size}".toComponent())
-            return false
+            return true
         }
 
         sender.sendMessage("&2Deaths for ${sender.name}")
@@ -45,7 +45,7 @@ class DeathsCommand(private val plugin: Deathban) : CommandExecutor {
             )
         }
         sender.sendMessage("&2Page ${page + 1}/${chunks.size}")
-        return false
+        return true
     }
 }
 

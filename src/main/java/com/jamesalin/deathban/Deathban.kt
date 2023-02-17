@@ -35,13 +35,9 @@ class Deathban : JavaPlugin() {
     val storage = Storage(this)
 
     override fun onEnable() {
-        logger.info(
-            """
-            ----------------------------------
-            Starting DeathBan by James Linimik
-            ----------------------------------
-            """.trimIndent()
-        )
+        logger.info("----------------------------------")
+        logger.info("Starting DeathBan by James Linimik")
+        logger.info("----------------------------------")
 
         // Listeners
         server.pluginManager.registerEvents(DeathListener(this), this)

@@ -18,20 +18,20 @@ class Lives(private val plugin: Deathban) : CommandExecutor {
 
             if (player == null) {
                 sender.sendMessage("&cPlayer ${args[0]} not found!".toComponent())
-                return false
+                return true
             }
 
             val visibility = plugin.storage.visibility["${player.uniqueId}"] ?: true
             if (!visibility && !sender.hasPermission("deathban.seethrough")) {
                 sender.sendMessage("&cPlayer ${args[0]}'s lives are not visible!".toComponent())
-                return false
+                return true
             }
 
             Pair(player.uniqueId, player.username ?: "Unknown")
         } else {
             if (sender !is Player) {
                 sender.sendMessage("&cThe console can't have any lives!".toComponent())
-                return false
+                return true
             }
 
             Pair(sender.uniqueId, "You")
@@ -41,7 +41,7 @@ class Lives(private val plugin: Deathban) : CommandExecutor {
 
         if (lives == null) {
             sender.sendMessage("&c$name have no lives!".toComponent())
-            return false
+            return true
         }
 
         sender.sendMessage(
@@ -50,7 +50,7 @@ class Lives(private val plugin: Deathban) : CommandExecutor {
             &7-${plugin.conf.playerDeathCost} for death by player, -${plugin.conf.nonPlayerDeathCost} for other death
             """.trimIndent().toComponent()
         )
-        return false
+        return true
     }
 }
 
