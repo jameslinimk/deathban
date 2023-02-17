@@ -1,8 +1,7 @@
 package com.jamesalin.deathban
 
 import DeathListener
-import com.jamesalin.deathban.commands.DeathsCommand
-import com.jamesalin.deathban.commands.DeathsCompleter
+import com.jamesalin.deathban.commands.*
 import me.leoko.advancedban.manager.UUIDManager
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
@@ -15,11 +14,12 @@ fun String.toComponent() = LegacyComponentSerializer.legacyAmpersand().deseriali
 fun Component.toStr() = LegacyComponentSerializer.legacyAmpersand().serialize(this)
 
 fun String.getUUID(): String = UUIDManager.get().getUUID(this)
-fun currentTimeSeconds(): Long = System.currentTimeMillis() / 1000
-fun secondsToDate(timeSeconds: Long): Date = Date(timeSeconds * 1000)
+
+fun currentTimeSeconds() = System.currentTimeMillis() / 1000
+fun secondsToDate(timeSeconds: Long) = Date(timeSeconds * 1000)
 
 val formatter = SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
-fun Date.format(): String = formatter.format(this)
+fun Date.format() = formatter.format(this)
 
 class Deathban : JavaPlugin() {
     val conf = Config(this)
@@ -37,8 +37,14 @@ class Deathban : JavaPlugin() {
         // Listeners
         server.pluginManager.registerEvents(DeathListener(this), this)
         getCommand("deaths")!!.setExecutor(DeathsCommand(this))
-        getCommand("deaths")!!.tabCompleter = DeathsCompleter(this)
 
+        getCommand("deaths")!!.tabCompleter = DeathsCompleter(this)
+        getCommand("lives")!!.setExecutor(Lives(this))
+
+        getCommand("editlives")!!.setExecutor(Editlives(this))
+        getCommand("editlives")!!.tabCompleter = EditlivesCompelter()
+
+        // onEnable
         conf.onEnable()
         storage.onEnable()
 
@@ -71,5 +77,6 @@ class Deathban : JavaPlugin() {
 
     override fun onDisable() {
         conf.save()
+        storage.save()
     }
 }

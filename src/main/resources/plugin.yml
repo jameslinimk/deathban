@@ -1,15 +1,31 @@
 name: Deathban
+description: A plugin that allows you to ban players for a certain amount of time after they die a certain amount of times
 version: "${project.version}"
+author: James Linimik
+website: https://github.com/Jameslinimk/deathban
 main: com.jamesalin.deathban.Deathban
 api-version: 1.19
+depend: [ AdvancedBan ]
 
 permissions:
-  bypass:
+  deathban.bypass:
     description: Bypasses the deathban restrictions
+    default: op
+  deathban.editlives:
+    description: Allows the user to edit the amount of lives a player has
     default: op
 
 commands:
   deaths:
     description: Shows the amount of times you lost lives
-    usage: /deaths [@OPTIONAL page]
-    aliases: [deathc, deathcount]
+    usage: /deaths [page]
+    aliases: [ deathc, deathcount ]
+  lives:
+    description: Shows the amount of lives you have
+    usage: /lives
+    aliases: [ lvs, livecount ]
+  editlives:
+    description: Edits the amount of lives a player has
+    usage: /editlives <player> <amount>
+    permission: deathban.editlives
+    aliases: [ editlvs, editlivecount ]
