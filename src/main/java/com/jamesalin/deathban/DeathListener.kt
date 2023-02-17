@@ -1,7 +1,4 @@
-import com.jamesalin.deathban.Deathban
-import com.jamesalin.deathban.LivesInfo
-import com.jamesalin.deathban.currentTimeSeconds
-import com.jamesalin.deathban.getUUID
+import com.jamesalin.deathban.*
 import me.leoko.advancedban.utils.Punishment
 import me.leoko.advancedban.utils.PunishmentType
 import org.bukkit.entity.EntityType
@@ -14,8 +11,8 @@ class DeathListener(private val plugin: Deathban) : Listener {
     fun onPlayerDeath(event: PlayerDeathEvent) {
         if (event.player.hasPermission("deathban.bypass")) return
 
-        val killer = event.entity.killer
         val player = event.player
+        val killer = player.killer
         val uuid = player.name.getUUID()
 
         val cost =
@@ -40,13 +37,22 @@ class DeathListener(private val plugin: Deathban) : Listener {
             )
 
             plugin.storage.punishments.add(
-                com.jamesalin.deathban.Punishment(
+                Punishment(
                     uuid,
                     cost,
                     currentTimeSeconds() + plugin.conf.updateInterval * 3600
                 )
             )
         }
+
+        // Saving the death
+        plugin.storage.lives[uuid]!!.deaths.add(
+            Death(
+                event.deathMessage()?.toStr() ?: "NONE",
+                currentTimeSeconds(),
+                cost
+            )
+        )
 
         plugin.storage.lives[uuid]!!.lives = newLives
         plugin.storage.save()

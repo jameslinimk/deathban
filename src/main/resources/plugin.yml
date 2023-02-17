@@ -7,3 +7,9 @@ permissions:
   bypass:
     description: Bypasses the deathban restrictions
     default: op
+
+commands:
+  deaths:
+    description: Shows the amount of times you lost lives
+    usage: /deaths [@OPTIONAL page]
+    aliases: [deathc, deathcount]

@@ -22,19 +22,19 @@ data class StorageSchema(
     var punishments: MutableList<Punishment> = mutableListOf()
 )
 
-class Storage(private val plugin: Deathban) {
+class Storage(plugin: Deathban) {
     private val file = File(plugin.dataFolder, "data.json")
-    private var data: StorageSchema? = null
+    private var data = StorageSchema()
 
     var lastUpdated: Long
-        get() = data!!.lastUpdated
-        set(value) = run { data!!.lastUpdated = value }
+        get() = data.lastUpdated
+        set(value) = run { data.lastUpdated = value }
     var lives: MutableMap<String, LivesInfo>
-        get() = data!!.lives
-        set(value) = run { data!!.lives = value }
+        get() = data.lives
+        set(value) = run { data.lives = value }
     var punishments: MutableList<Punishment>
-        get() = data!!.punishments
-        set(value) = run { data!!.punishments = value }
+        get() = data.punishments
+        set(value) = run { data.punishments = value }
 
     fun onEnable() {
         if (!file.exists()) {
