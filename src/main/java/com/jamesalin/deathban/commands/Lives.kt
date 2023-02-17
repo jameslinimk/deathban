@@ -1,6 +1,7 @@
 package com.jamesalin.deathban.commands
 
 import com.jamesalin.deathban.Deathban
+import com.jamesalin.deathban.getPlayer
 import com.jamesalin.deathban.toComponent
 import org.bukkit.Bukkit
 import org.bukkit.command.Command
@@ -13,11 +14,7 @@ import org.bukkit.util.StringUtil
 class Lives(private val plugin: Deathban) : CommandExecutor {
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>?): Boolean {
         val (uuid, name) = if (args?.size == 1) {
-            val player = Bukkit.getPlayer(args[0]) ?: run {
-                val offlinePlayer = Bukkit.getOfflinePlayer(args[0])
-                Bukkit.getServer().offlinePlayers
-                if (offlinePlayer.hasPlayedBefore()) offlinePlayer else null
-            }
+            val player = getPlayer(args[0])
 
             if (player == null) {
                 sender.sendMessage("&cPlayer ${args[0]} not found!".toComponent())
@@ -30,7 +27,7 @@ class Lives(private val plugin: Deathban) : CommandExecutor {
                 return false
             }
 
-            Pair(player.uniqueId, player.name ?: "Unknown")
+            Pair(player.uniqueId, player.username ?: "Unknown")
         } else {
             if (sender !is Player) {
                 sender.sendMessage("&cThe console can't have any lives!".toComponent())
@@ -59,10 +56,7 @@ class Lives(private val plugin: Deathban) : CommandExecutor {
 
 class LivesCompleter : TabCompleter {
     override fun onTabComplete(
-        sender: CommandSender,
-        command: Command,
-        label: String,
-        args: Array<out String>?
+        sender: CommandSender, command: Command, label: String, args: Array<out String>?
     ): MutableList<String> {
         val completions = mutableListOf<String>()
         if (args?.size == 1) {

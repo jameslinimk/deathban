@@ -1,6 +1,7 @@
 package com.jamesalin.deathban.commands
 
 import com.jamesalin.deathban.Deathban
+import com.jamesalin.deathban.getPlayer
 import com.jamesalin.deathban.toComponent
 import org.bukkit.Bukkit
 import org.bukkit.command.Command
@@ -21,11 +22,8 @@ class Editlives(private val plugin: Deathban) : CommandExecutor {
             return false
         }
 
-        val player = Bukkit.getPlayer(args[0]) ?: run {
-            val offlinePlayer = Bukkit.getOfflinePlayer(args[0])
-            if (offlinePlayer.hasPlayedBefore()) offlinePlayer else null
-        }
-        
+        val player = getPlayer(args[0])
+
         if (player == null) {
             sender.sendMessage("&cPlayer ${args[0]} not found!".toComponent())
             return false
@@ -38,14 +36,14 @@ class Editlives(private val plugin: Deathban) : CommandExecutor {
         }
 
         if (!plugin.storage.lives.containsKey("${player.uniqueId}")) {
-            sender.sendMessage("&cPlayer ${player.name} has no entry in lives!".toComponent())
+            sender.sendMessage("&cPlayer ${player.username} has no entry in lives!".toComponent())
             return false
         }
 
         plugin.storage.lives["${player.uniqueId}"]!!.lives = lives
         plugin.storage.save()
 
-        sender.sendMessage("&aSuccessfully set ${player.name}'s lives to $lives!".toComponent())
+        sender.sendMessage("&aSuccessfully set ${player.username}'s lives to $lives!".toComponent())
         return false
     }
 }

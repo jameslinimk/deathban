@@ -5,10 +5,13 @@ import com.jamesalin.deathban.commands.*
 import me.leoko.advancedban.manager.UUIDManager
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer.legacyAmpersand
+import net.luckperms.api.LuckPermsProvider
+import net.luckperms.api.model.user.User
 import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.scheduler.BukkitRunnable
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 // Utility functions
 fun String.toComponent() = legacyAmpersand().deserialize(this)
@@ -21,6 +24,11 @@ fun secondsToDate(timeSeconds: Long) = Date(timeSeconds * 1000)
 
 val formatter = SimpleDateFormat("MMM dd, hh:mmaa")
 fun Date.format(): String = formatter.format(this)
+
+fun getPlayer(name: String): User? {
+    val api = LuckPermsProvider.get()
+    return api.userManager.getUser(name)
+}
 
 class Deathban : JavaPlugin() {
     val conf = Config(this)

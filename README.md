@@ -1,7 +1,7 @@
 # Deathban
 
 Custom plugin for [Zerosmp](https://discord.gg/D8EyC4dUYv) that adds a deathban to the server
-for [papermc](https://papermc.io/) 1.19
+for [PaperMC](https://papermc.io/) 1.19 written in Kotlin.
 
 ## How it works
 
@@ -10,20 +10,27 @@ time.
 
 - When a player loses lives, they come back after a set period
 - Players lose more lives when killed by another player
-- Uses the [AdvancedBan](https://www.spigotmc.org/resources/advancedban.8695/) api to ban players
+
+## Dependencies
+
+- [AdvancedBan](https://www.spigotmc.org/resources/advancedban.8695/) - For banning players
+- [LuckPerms](https://luckperms.net/) - For loading cached player uuids
 
 ## Usage
 
-- `/lives` - Shows the player how many lives they have left
-- `/deaths` - Shows the player how many times they have died and information about their deaths
-- `/editlives <player> <amount>` - Edits the lives of a player (requires `deathban.editlives` permission)
+- `/lives [player]` - Shows a player, or another player, how many lives they have left
+- `/deaths [page]` - Shows the amount of times a player has lost lives
+- `/editlives <player> <amount>` - Edits the amount of lives a player has (requires `deathban.editlives` permission)
+- `/showlives` - Makes your lives visible to other players
+- `/hidelives` - Hides your lives from other players
 
 ## Permissions
 
 - `deathban.editlives` - Allows a player to edit the lives of other players
 - `deathban.bypass` - Allows a player to bypass the deathban
+- `deathban.seethrough` - Allows a player to see the lives of other players
 
-## Defalt Config
+## Default Config
 
 ```yaml
 # The limit of lives a player can have. Player lives reset/default to this
@@ -45,4 +52,4 @@ playerDeathCost: 2
 nonPlayerDeathCost: 1
 ```
 
-### Feel free to use this plugin on your server but give credit
+### Feel free to use this plugin on your server but give credit to me

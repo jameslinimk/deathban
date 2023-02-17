@@ -5,7 +5,7 @@ author: James Linimik
 website: https://github.com/Jameslinimk/deathban
 main: com.jamesalin.deathban.Deathban
 api-version: 1.19
-depend: [ AdvancedBan ]
+depend: [ AdvancedBan, LuckPerms ]
 
 permissions:
   deathban.bypass:
