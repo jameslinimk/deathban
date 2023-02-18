@@ -37,13 +37,8 @@ class Lives(private val plugin: Deathban) : CommandExecutor {
             Pair(sender.uniqueId, "You")
         }
 
-        val lives = plugin.storage.lives["$uuid"]?.lives
-
-        if (lives == null) {
-            sender.sendMessage("&c$name have no lives!".toComponent())
-            return true
-        }
-
+        val lives = plugin.storage.lives["$uuid"]?.lives ?: plugin.conf.livesLimit
+        
         sender.sendMessage(
             """
             &2$name have $lives/${plugin.conf.livesLimit} lives!
