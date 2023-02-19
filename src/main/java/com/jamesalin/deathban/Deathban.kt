@@ -1,6 +1,5 @@
 package com.jamesalin.deathban
 
-import DeathListener
 import com.jamesalin.deathban.commands.*
 import me.leoko.advancedban.manager.UUIDManager
 import net.kyori.adventure.text.Component
@@ -11,7 +10,6 @@ import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.scheduler.BukkitRunnable
 import java.text.SimpleDateFormat
 import java.util.*
-
 
 // Utility functions
 fun String.toComponent() = legacyAmpersand().deserialize(this)

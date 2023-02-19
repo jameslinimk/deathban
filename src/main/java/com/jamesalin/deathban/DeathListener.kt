@@ -1,4 +1,5 @@
-import com.jamesalin.deathban.*
+package com.jamesalin.deathban
+
 import me.leoko.advancedban.utils.Punishment
 import me.leoko.advancedban.utils.PunishmentType
 import org.bukkit.entity.EntityType
